@@ -51,7 +51,8 @@ void SY6970::enable_state_led() {
 
   val.status_pin_enable = 1;
   
-  return this->write_register(POWERS_PPM_REG_07H, &val.raw, 1);
+  err =  this->write_register(POWERS_PPM_REG_07H, &val.raw, 1);
+  ERROR_CHECK_RET(err);
 }
 
 void SY6970::disable_state_led() {
@@ -61,7 +62,8 @@ void SY6970::disable_state_led() {
 
   val.status_pin_enable = 0;
   
-  return this->write_register(POWERS_PPM_REG_07H, val.raw, 1);
+  err = this->write_register(POWERS_PPM_REG_07H, val.raw, 1);
+  ERROR_CHECK_RET(err);
 }
 
 void SY6970::disable_watchdog() {
