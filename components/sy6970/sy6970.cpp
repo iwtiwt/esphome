@@ -49,7 +49,7 @@ void SY6970::enable_state_led() {
   i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, &val.raw, 1);
   ERROR_CHECK(err);
 
-  val.status_pin_enable = 1;
+  val.status_pin_enable = 0;
   
   err =  this->write_register(POWERS_PPM_REG_07H, &val.raw, 1);
   ERROR_CHECK(err);
@@ -60,7 +60,7 @@ void SY6970::disable_state_led() {
   i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, &val.raw, 1);
   ERROR_CHECK(err);
 
-  val.status_pin_enable = 0;
+  val.status_pin_enable = 1;
   
   err = this->write_register(POWERS_PPM_REG_07H, &val.raw, 1);
   ERROR_CHECK(err);
