@@ -7,6 +7,18 @@
 namespace esphome {
 namespace sy6970 {
 
+union ConfigurationRegister07 {
+  uint8_t raw : 8;
+  struct {
+    uint8_t charge_termination : 1;
+    uint8_t status_pin_enable : 1;
+    uint8_t watchdog_timer : 2;
+    uint8_t charge_safety_timer : 1;
+    uint8_t fast_charge_timer : 2;
+    uint8_t jeita_current_sense : 1;
+  } __attribute__((packed));
+};
+
 class SY6970 : public Component, public i2c::I2CDevice {
  public:
   void setup() override;
