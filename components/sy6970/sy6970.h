@@ -8,7 +8,7 @@ namespace esphome {
 namespace sy6970 {
 
 union ConfigurationRegister07 {
-  uint8_t raw : 8;
+  uint8_t raw;
   struct {
     uint8_t charge_termination : 1;
     uint8_t status_pin_enable : 1;
