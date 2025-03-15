@@ -46,17 +46,17 @@ void SY6970::reset_default() {
 
 void SY6970::enable_state_led() {
   ConfigurationRegister07 val;
-  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, val.raw, 1);
+  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, &val.raw, 1);
   ERROR_CHECK_RET(err);
 
   val.status_pin_enable = 1;
   
-  return this->write_register(POWERS_PPM_REG_07H, val.raw, 1);
+  return this->write_register(POWERS_PPM_REG_07H, &val.raw, 1);
 }
 
 void SY6970::disable_state_led() {
   ConfigurationRegister07 val;
-  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, val.raw, 1);
+  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, &val.raw, 1);
   ERROR_CHECK_RET(err);
 
   val.status_pin_enable = 0;
@@ -66,12 +66,12 @@ void SY6970::disable_state_led() {
 
 void SY6970::disable_watchdog() {
 ConfigurationRegister07 val;
-  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, val.raw, 1);
+  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, &val.raw, 1);
   ERROR_CHECK_RET(err);
 
   val.watchdog_timer = 0;
   
-  err = this->write_register(POWERS_PPM_REG_07H, val.raw, 1);
+  err = this->write_register(POWERS_PPM_REG_07H, &val.raw, 1);
   ERROR_CHECK(err);
 }
 
