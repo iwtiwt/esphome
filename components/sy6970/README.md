@@ -1,4 +1,5 @@
 Starting from https://github.com/buglloc/esphome-components/tree/main/components/sy6970
+--
 esphome:
   name: t-display-s3-long
   friendly_name: LilyGo-T-Display-Long
@@ -26,3 +27,4 @@ i2c:
 sy6970:
   i2c_id: i2c_bus
   state_led_enable: false
+--
