@@ -45,48 +45,34 @@ void SY6970::reset_default() {
 }
 
 void SY6970::enable_state_led() {
-  this->clear_register_bit(POWERS_PPM_REG_07H, 6);
+  ConfigurationRegister07 val;
+  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, val.raw, 1);
+  ERROR_CHECK_RET(err);
+
+  val.status_pin_enable = 1;
+  
+  return this->write_register(POWERS_PPM_REG_07H, val.raw, 1);
 }
 
 void SY6970::disable_state_led() {
-  this->set_register_bit(POWERS_PPM_REG_07H, 6);
+  ConfigurationRegister07 val;
+  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, val.raw, 1);
+  ERROR_CHECK_RET(err);
+
+  val.status_pin_enable = 0;
+  
+  return this->write_register(POWERS_PPM_REG_07H, val.raw, 1);
 }
 
 void SY6970::disable_watchdog() {
-  uint8_t val = 0;
-  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, &val, 1);
+ConfigurationRegister07 val;
+  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_07H, val.raw, 1);
+  ERROR_CHECK_RET(err);
+
+  val.watchdog_timer = 0;
+  
+  err = this->write_register(POWERS_PPM_REG_07H, val.raw, 1);
   ERROR_CHECK(err);
-
-  val &= 0xCF;
-  err = this->write_register(POWERS_PPM_REG_07H, &val, 1);
-  ERROR_CHECK(err);
-}
-
-i2c::ErrorCode SY6970::get_register_bit(uint8_t reg, uint8_t bit, bool &out) {
-  uint8_t val = 0;
-  i2c::ErrorCode err = this->read_register(reg, &val, 1);
-  ERROR_CHECK_RET(err);
-
-  out = val & _BV(bit);
-  return i2c::ERROR_OK;
-}
-
-i2c::ErrorCode SY6970::set_register_bit(uint8_t reg, uint8_t bit) {
-  uint8_t val = 0;
-  i2c::ErrorCode err = this->read_register(reg, &val, 1);
-  ERROR_CHECK_RET(err);
-
-  val |= _BV(bit);
-  return this->write_register(reg, &val, 1);
-}
-
-i2c::ErrorCode SY6970::clear_register_bit(uint8_t reg, uint8_t bit) {
-  uint8_t val = 0;
-  i2c::ErrorCode err = this->read_register(reg, &val, 1);
-  ERROR_CHECK_RET(err);
-
-  val &= ~_BV(bit);
-  return this->write_register(reg, &val, 1);
 }
 
 }  // namespace sy6970
