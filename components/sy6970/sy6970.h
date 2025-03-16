@@ -42,7 +42,7 @@ class SY6970 : public PollingComponent, public i2c::I2CDevice {
 
   void enable_state_led();
   void disable_state_led();
-  void set_shunt_voltage_sensor(sensor::Sensor *battery_voltage_sensor) { battery_voltage_sensor_ = battery_voltage_sensor; }
+  void set_batt_voltage_sensor(sensor::Sensor *battery_voltage_sensor) { battery_voltage_sensor_ = battery_voltage_sensor; }
   void disable_watchdog();
 
  protected:
