@@ -1,12 +1,13 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 
-from esphome.components import i2c
+from esphome.components import i2c, sensor
 from esphome.const import (
   CONF_ID,
+  CONF_BATT_VOLTAGE,
 )
 
-CODEOWNERS = ["@buglloc"]
+CODEOWNERS = ["@iwtiwt"]
 DEPENDENCIES = ["i2c"]
 
 sy6970_ns = cg.esphome_ns.namespace("sy6970")
@@ -21,6 +22,12 @@ CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(): cv.declare_id(SY6970),
         cv.Optional(CONF_STATE_LED_ENABLE, default=True): cv.boolean,
+        cv.Optional(CONF_BATT_VOLTAGE): sensor.sensor_schema(
+            unit_of_measurement=UNIT_VOLT,
+            accuracy_decimals=2,
+            device_class=DEVICE_CLASS_VOLTAGE,
+            state_class=STATE_CLASS_MEASUREMENT,
+            ),
     }
 ).extend(
     cv.COMPONENT_SCHEMA
@@ -36,3 +43,6 @@ async def to_code(config):
 
     if enabled := config.get(CONF_STATE_LED_ENABLE):
         cg.add(var.set_state_led_enabled(enabled))
+    if CONF_BATT_VOLTAGE in config:
+        sens = await sensor.new_sensor(config[CONF_BATT_VOLTAGE])
+        cg.add(var.set_batt_voltage_sensor(sens))

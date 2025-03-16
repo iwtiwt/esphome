@@ -31,6 +31,7 @@ class SY6970 : public Component, public i2c::I2CDevice {
  public:
   void setup() override;
   void dump_config() override;
+  void update() override;
 
   void set_state_led_enabled(bool enabled) {
     this->is_state_led_enabled_ = enabled;
@@ -40,7 +41,7 @@ class SY6970 : public Component, public i2c::I2CDevice {
 
   void enable_state_led();
   void disable_state_led();
-
+  void set_shunt_voltage_sensor(sensor::Sensor *battery_voltage_sensor) { battery_voltage_sensor_ = battery_voltage_sensor; }
   void disable_watchdog();
 
  protected:
@@ -49,6 +50,7 @@ class SY6970 : public Component, public i2c::I2CDevice {
   i2c::ErrorCode clear_register_bit(uint8_t reg, uint8_t bit);
 
  protected:
+  sensor::Sensor *battery_voltage_sensor_{nullptr};
   bool is_state_led_enabled_ = false;
 };
 
