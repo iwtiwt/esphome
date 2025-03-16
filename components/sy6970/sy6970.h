@@ -19,6 +19,14 @@ union ConfigurationRegister07 {
   } __attribute__((packed));
 };
 
+union ConfigurationRegister0E {
+  uint8_t raw;
+  struct {
+    uint8_t therm_state : 1;
+    uint8_t batteryv : 7;
+  } __attribute__((packed));
+};
+
 class SY6970 : public Component, public i2c::I2CDevice {
  public:
   void setup() override;
