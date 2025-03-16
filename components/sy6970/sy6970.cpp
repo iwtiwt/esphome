@@ -36,10 +36,10 @@ void SY6970::setup() {
 void SY6970::update() {
   if (this->battery_voltage_sensor_ != nullptr) {
     ConfigurationRegister0E battery_register;
-    i2c::ErrorCode err =this->read_register(POWERS_PPM_REG_0EH, &raw_battery_register.raw, 1);
+    i2c::ErrorCode err =this->read_register(POWERS_PPM_REG_0EH, &battery_register.raw, 1);
     ERROR_CHECK(err);
 
-    float battery_voltage_v = raw_battery_register.batteryv;
+    float battery_voltage_v = battery_register.batteryv;
     battery_voltage_v *= 0.02f;
     battery_voltage_v += 2.304;
     this->battery_voltage_sensor_->publish_state(battery_voltage_v);
