@@ -34,15 +34,26 @@ void SY6970::setup() {
 }
 
 void SY6970::update() {
+  i2c::ErrorCode err;
   if (this->battery_voltage_sensor_ != nullptr) {
     ConfigurationRegister0E battery_register;
-    i2c::ErrorCode err =this->read_register(POWERS_PPM_REG_0EH, &battery_register.raw, 1);
+    err =this->read_register(POWERS_PPM_REG_0EH, &battery_register.raw, 1);
     ERROR_CHECK(err);
 
     float battery_voltage_v = battery_register.batteryv;
     battery_voltage_v *= 0.02f;
     battery_voltage_v += 2.304;
     this->battery_voltage_sensor_->publish_state(battery_voltage_v);
+  }
+  if (this->bus_voltage_sensor_ != nullptr) {
+    ConfigurationRegister0F bus_register;
+    err =this->read_register(POWERS_PPM_REG_0FH, &bus_register.raw, 1);
+    ERROR_CHECK(err);
+
+    float bus_voltage_v = bus_register.busv;
+    bus_voltage_v *= 0.02f;
+    bus_voltage_v += 2.304;
+    this->bus_voltage_sensor_->publish_state(bus_voltage_v);
   }
 }
 

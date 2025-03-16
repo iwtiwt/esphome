@@ -5,6 +5,7 @@ from esphome.components import i2c, sensor
 from esphome.const import (
   CONF_ID,
   CONF_BATTERY_VOLTAGE,
+  CONF_BUS_VOLTAGE,
   UNIT_VOLT,
   DEVICE_CLASS_VOLTAGE,
   STATE_CLASS_MEASUREMENT,  
@@ -28,6 +29,12 @@ CONFIG_SCHEMA = cv.Schema(
             device_class=DEVICE_CLASS_VOLTAGE,
             state_class=STATE_CLASS_MEASUREMENT,
             ),
+            cv.Optional(CONF_BUS_VOLTAGE ): sensor.sensor_schema(
+            unit_of_measurement=UNIT_VOLT,
+            accuracy_decimals=2,
+            device_class=DEVICE_CLASS_VOLTAGE,
+            state_class=STATE_CLASS_MEASUREMENT,
+            ),
     }
 ).extend(
     cv.polling_component_schema("6s")
@@ -46,3 +53,6 @@ async def to_code(config):
     if CONF_BATTERY_VOLTAGE in config:
         sens = await sensor.new_sensor(config[CONF_BATTERY_VOLTAGE])
         cg.add(var.set_batt_voltage_sensor(sens))
+    if CONF_BUS_VOLTAGE in config:
+        sens = await sensor.new_sensor(config[CONF_BUS_VOLTAGE])
+        cg.add(var.set_bus_voltage_sensor(sens))
