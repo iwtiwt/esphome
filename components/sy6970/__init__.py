@@ -33,7 +33,7 @@ CONFIG_SCHEMA = cv.Schema(
             ),
     }
 ).extend(
-    cv.COMPONENT_SCHEMA
+    cv.polling_component_schema("60s")
 ).extend(
     i2c.i2c_device_schema(0x6A)
 )
