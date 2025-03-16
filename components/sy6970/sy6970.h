@@ -28,7 +28,7 @@ union ConfigurationRegister0E {
   } __attribute__((packed));
 };
 
-class SY6970 : public Component, public i2c::I2CDevice {
+class SY6970 : public PollingComponent, public i2c::I2CDevice {
  public:
   void setup() override;
   void dump_config() override;
