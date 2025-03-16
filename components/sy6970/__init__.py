@@ -5,6 +5,9 @@ from esphome.components import i2c, sensor
 from esphome.const import (
   CONF_ID,
   CONF_BATTERY_VOLTAGE,
+  UNIT_VOLT,
+  DEVICE_CLASS_VOLTAGE,
+  STATE_CLASS_MEASUREMENT,  
 )
 
 CODEOWNERS = ["@iwtiwt"]
