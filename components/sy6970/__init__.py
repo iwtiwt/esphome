@@ -16,7 +16,7 @@ DEPENDENCIES = ["i2c"]
 sy6970_ns = cg.esphome_ns.namespace("sy6970")
 SY6970 = sy6970_ns.class_(
     "SY6970",
-    cg.Component,
+    cg.PollingComponent,
     i2c.I2CDevice,
 )
 
