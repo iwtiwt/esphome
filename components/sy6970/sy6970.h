@@ -11,28 +11,28 @@ namespace sy6970 {
 union ConfigurationRegister07 {
   uint8_t raw;
   struct {
-    uint8_t charge_termination : 1;
-    uint8_t status_pin_enable : 1;
-    uint8_t watchdog_timer : 2;
-    uint8_t charge_safety_timer : 1;
-    uint8_t fast_charge_timer : 2;
     uint8_t jeita_current_sense : 1;
+    uint8_t fast_charge_timer : 2;
+    uint8_t charge_safety_timer : 1;
+    uint8_t watchdog_timer : 2;
+    uint8_t status_pin_enable : 1;
+    uint8_t charge_termination : 1;
   } __attribute__((packed));
 };
 
 union ConfigurationRegister0E {
   uint8_t raw;
   struct {
-    uint8_t therm_state : 1;
     uint8_t batteryv : 7;
+    uint8_t therm_state : 1;
   } __attribute__((packed));
 };
 
 union ConfigurationRegister0F {
   uint8_t raw;
   struct {
-    uint8_t unused : 1;
     uint8_t busv : 7;
+    uint8_t unused : 1;
   } __attribute__((packed));
 };
 
