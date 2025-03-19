@@ -50,7 +50,7 @@ void SY6970::update() {
     err =this->read_register(POWERS_PPM_REG_0FH, &sys_register.raw, 1);
     ERROR_CHECK(err);
 
-    float sys_voltage_v = sys_register.busv;
+    float sys_voltage_v = sys_register.sysv;
     sys_voltage_v *= 0.02f;
     sys_voltage_v += 2.304f;
     this->sys_voltage_sensor_->publish_state(sys_voltage_v);
