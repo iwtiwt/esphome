@@ -107,7 +107,7 @@ void SY6970::enable_adc_rate() {
   i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_02H, &val.raw, 1);
   ERROR_CHECK(err);
 
-  val.conv_rate = 0;
+  val.conv_rate = 1;
   
   err =  this->write_register(POWERS_PPM_REG_02H, &val.raw, 1);
   ERROR_CHECK(err);
@@ -118,7 +118,7 @@ void SY6970::disable_adc_rate() {
   i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_02H, &val.raw, 1);
   ERROR_CHECK(err);
 
-  val.conv_rate = 1;
+  val.conv_rate = 0;
   
   err = this->write_register(POWERS_PPM_REG_02H, &val.raw, 1);
   ERROR_CHECK(err);
