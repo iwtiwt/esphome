@@ -21,11 +21,13 @@ SY6970 = sy6970_ns.class_(
 CONF_SYS_VOLTAGE = "sys_voltage"
 
 CONF_STATE_LED_ENABLE = "state_led_enable"
+CONF_CONV_RATE_ENABLE = "state_adc_enable"
 
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(): cv.declare_id(SY6970),
         cv.Optional(CONF_STATE_LED_ENABLE, default=True): cv.boolean,
+        cv.Optional(CONF_CONV_RATE_ENABLE, default=True): cv.boolean,
         cv.Optional(CONF_BATTERY_VOLTAGE ): sensor.sensor_schema(
             unit_of_measurement=UNIT_VOLT,
             accuracy_decimals=2,
@@ -59,6 +61,9 @@ async def to_code(config):
 
     if enabled := config.get(CONF_STATE_LED_ENABLE):
         cg.add(var.set_state_led_enabled(enabled))
+    if enabled := config.get(CONF_CONV_RATE_ENABLE):
+        cg.add(var.set_adc_enabled(enabled))
+
     if CONF_BATTERY_VOLTAGE in config:
         sens = await sensor.new_sensor(config[CONF_BATTERY_VOLTAGE])
         cg.add(var.set_batt_voltage_sensor(sens))

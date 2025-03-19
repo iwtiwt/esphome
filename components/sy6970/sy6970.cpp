@@ -29,6 +29,7 @@ void SY6970::setup() {
 
   this->disable_watchdog();
   this->is_state_led_enabled_ ? this->enable_state_led() : this->disable_state_led();
+  this->is_adc_rate_enabled_ ? this->enable_adc_rate() : this->disable_adc_rate();
 
   ESP_LOGCONFIG(TAG, "SY6970 PMU setup complete");
 }
@@ -71,6 +72,7 @@ void SY6970::dump_config() {
   ESP_LOGCONFIG(TAG, "SY6970 PMU:");
   LOG_I2C_DEVICE(this);
   ESP_LOGCONFIG(TAG, "  State LED: %s", ONOFF(this->is_state_led_enabled_));
+  ESP_LOGCONFIG(TAG, "   ADC Rate: %s", ONOFF(this->is_adc_rate_enabled_));
 }
 
 void SY6970::reset_default() {
@@ -97,6 +99,28 @@ void SY6970::disable_state_led() {
   val.status_pin_enable = 1;
   
   err = this->write_register(POWERS_PPM_REG_07H, &val.raw, 1);
+  ERROR_CHECK(err);
+}
+
+void SY6970::enable_adc_rate() {
+  ConfigurationRegister02 val;
+  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_02H, &val.raw, 1);
+  ERROR_CHECK(err);
+
+  val.conv_rate = 0;
+  
+  err =  this->write_register(POWERS_PPM_REG_02H, &val.raw, 1);
+  ERROR_CHECK(err);
+}
+
+void SY6970::disable_adc_rate() {
+  ConfigurationRegister02 val;
+  i2c::ErrorCode err = this->read_register(POWERS_PPM_REG_02H, &val.raw, 1);
+  ERROR_CHECK(err);
+
+  val.conv_rate = 1;
+  
+  err = this->write_register(POWERS_PPM_REG_02H, &val.raw, 1);
   ERROR_CHECK(err);
 }
 

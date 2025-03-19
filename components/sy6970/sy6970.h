@@ -8,6 +8,20 @@
 namespace esphome {
 namespace sy6970 {
 
+union ConfigurationRegister02 {
+  uint8_t raw;
+  struct {
+    uint8_t auto_dpdm_enable : 1;
+    uint8_t force_dpdm : 1;
+    uint8_t hv_type : 1;
+    uint8_t hvdcp_enable : 1;
+    uint8_t aicl_enable : 1;
+    uint8_t boost_freq : 1;
+    uint8_t conv_rate : 1;
+    uint8_t conv_start : 1;
+  } __attribute__((packed));
+};
+
 union ConfigurationRegister07 {
   uint8_t raw;
   struct {
@@ -52,11 +66,16 @@ class SY6970 : public PollingComponent, public i2c::I2CDevice {
   void set_state_led_enabled(bool enabled) {
     this->is_state_led_enabled_ = enabled;
   }
+  void set_adc_rate_enabled(bool enabled) {
+    this->is_adc_rate_enabled_ = enabled;
+  }
 
   void reset_default();
 
   void enable_state_led();
   void disable_state_led();
+  void enable_adc_rate();
+  void disable_adc_rate();
   void set_batt_voltage_sensor(sensor::Sensor *battery_voltage_sensor) { battery_voltage_sensor_ = battery_voltage_sensor; }
   void set_bus_voltage_sensor(sensor::Sensor *bus_voltage_sensor) { bus_voltage_sensor_ = bus_voltage_sensor; }
   void set_sys_voltage_sensor(sensor::Sensor *sys_voltage_sensor) { sys_voltage_sensor_ = sys_voltage_sensor; }
@@ -72,6 +91,7 @@ class SY6970 : public PollingComponent, public i2c::I2CDevice {
   sensor::Sensor *bus_voltage_sensor_{nullptr};
   sensor::Sensor *sys_voltage_sensor_{nullptr};
   bool is_state_led_enabled_ = false;
+  bool is_adc_rate_enabled_ = false;
 };
 
 }  // namespace sy6970
