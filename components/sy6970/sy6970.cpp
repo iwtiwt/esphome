@@ -45,9 +45,9 @@ void SY6970::update() {
     battery_voltage_v += 2.304f;
     this->battery_voltage_sensor_->publish_state(battery_voltage_v);
   }
-  if (this->bus_voltage_sensor_ != nullptr) {
-    ConfigurationRegister0F bus_register;
-    err =this->read_register(POWERS_PPM_REG_0FH, &bus_register.raw, 1);
+  if (this->sys_voltage_sensor_ != nullptr) {
+    ConfigurationRegister0F sys_register;
+    err =this->read_register(POWERS_PPM_REG_0FH, &sys_register.raw, 1);
     ERROR_CHECK(err);
 
     float sys_voltage_v = sys_register.busv;
