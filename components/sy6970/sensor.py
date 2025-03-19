@@ -18,7 +18,10 @@ SY6970 = sy6970_ns.class_(
     i2c.I2CDevice,
 )
 
+CONF_SYS_VOLTAGE = "sys_voltage"
+
 CONF_STATE_LED_ENABLE = "state_led_enable"
+
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(): cv.declare_id(SY6970),
@@ -29,7 +32,13 @@ CONFIG_SCHEMA = cv.Schema(
             device_class=DEVICE_CLASS_VOLTAGE,
             state_class=STATE_CLASS_MEASUREMENT,
             ),
-            cv.Optional(CONF_BUS_VOLTAGE ): sensor.sensor_schema(
+        cv.Optional(CONF_SYS_VOLTAGE ): sensor.sensor_schema(
+            unit_of_measurement=UNIT_VOLT,
+            accuracy_decimals=2,
+            device_class=DEVICE_CLASS_VOLTAGE,
+            state_class=STATE_CLASS_MEASUREMENT,
+            ),
+        cv.Optional(CONF_BUS_VOLTAGE ): sensor.sensor_schema(
             unit_of_measurement=UNIT_VOLT,
             accuracy_decimals=2,
             device_class=DEVICE_CLASS_VOLTAGE,
@@ -56,3 +65,6 @@ async def to_code(config):
     if CONF_BUS_VOLTAGE in config:
         sens = await sensor.new_sensor(config[CONF_BUS_VOLTAGE])
         cg.add(var.set_bus_voltage_sensor(sens))
+    if CONF_SYS_VOLTAGE in config:
+        sens = await sensor.new_sensor(config[CONF_SYS_VOLTAGE])
+        cg.add(var.set_sys_voltage_sensor(sens))

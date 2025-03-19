@@ -31,11 +31,18 @@ union ConfigurationRegister0E {
 union ConfigurationRegister0F {
   uint8_t raw;
   struct {
-    uint8_t busv : 7;
+    uint8_t sysv : 7;
     uint8_t unused : 1;
   } __attribute__((packed));
 };
 
+union ConfigurationRegister11 {
+  uint8_t raw;
+  struct {
+    uint8_t busv : 7;
+    uint8_t busconnected : 1;
+  } __attribute__((packed));
+};
 class SY6970 : public PollingComponent, public i2c::I2CDevice {
  public:
   void setup() override;
@@ -52,6 +59,7 @@ class SY6970 : public PollingComponent, public i2c::I2CDevice {
   void disable_state_led();
   void set_batt_voltage_sensor(sensor::Sensor *battery_voltage_sensor) { battery_voltage_sensor_ = battery_voltage_sensor; }
   void set_bus_voltage_sensor(sensor::Sensor *bus_voltage_sensor) { bus_voltage_sensor_ = bus_voltage_sensor; }
+  void set_sys_voltage_sensor(sensor::Sensor *sys_voltage_sensor) { sys_voltage_sensor_ = sys_voltage_sensor; }
   void disable_watchdog();
 
  protected:
@@ -62,6 +70,7 @@ class SY6970 : public PollingComponent, public i2c::I2CDevice {
  protected:
   sensor::Sensor *battery_voltage_sensor_{nullptr};
   sensor::Sensor *bus_voltage_sensor_{nullptr};
+  sensor::Sensor *sys_voltage_sensor_{nullptr};
   bool is_state_led_enabled_ = false;
 };
 

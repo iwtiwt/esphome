@@ -42,7 +42,7 @@ void SY6970::update() {
 
     float battery_voltage_v = battery_register.batteryv;
     battery_voltage_v *= 0.02f;
-    battery_voltage_v += 2.304;
+    battery_voltage_v += 2.304f;
     this->battery_voltage_sensor_->publish_state(battery_voltage_v);
   }
   if (this->bus_voltage_sensor_ != nullptr) {
@@ -50,9 +50,19 @@ void SY6970::update() {
     err =this->read_register(POWERS_PPM_REG_0FH, &bus_register.raw, 1);
     ERROR_CHECK(err);
 
+    float sys_voltage_v = sys_register.busv;
+    sys_voltage_v *= 0.02f;
+    sys_voltage_v += 2.304f;
+    this->sys_voltage_sensor_->publish_state(sys_voltage_v);
+  }
+  if (this->bus_voltage_sensor_ != nullptr) {
+    ConfigurationRegister11 bus_register;
+    err =this->read_register(POWERS_PPM_REG_11H, &bus_register.raw, 1);
+    ERROR_CHECK(err);
+
     float bus_voltage_v = bus_register.busv;
-    bus_voltage_v *= 0.02f;
-    bus_voltage_v += 2.304;
+    bus_voltage_v *= 0.100f;
+    bus_voltage_v += 2.6f;
     this->bus_voltage_sensor_->publish_state(bus_voltage_v);
   }
 }
