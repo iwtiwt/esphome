@@ -62,7 +62,7 @@ async def to_code(config):
     if enabled := config.get(CONF_STATE_LED_ENABLE):
         cg.add(var.set_state_led_enabled(enabled))
     if enabled := config.get(CONF_CONV_RATE_ENABLE):
-        cg.add(var.set_adc_enabled(enabled))
+        cg.add(var.set_adc_rate_enabled(enabled))
 
     if CONF_BATTERY_VOLTAGE in config:
         sens = await sensor.new_sensor(config[CONF_BATTERY_VOLTAGE])
