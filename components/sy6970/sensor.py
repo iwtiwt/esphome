@@ -8,7 +8,9 @@ from esphome.const import (
   CONF_BUS_VOLTAGE,
   UNIT_VOLT,
   DEVICE_CLASS_VOLTAGE,
-  STATE_CLASS_MEASUREMENT,  
+  DEVICE_CLASS_CURRENT,
+  STATE_CLASS_MEASUREMENT,
+  UNIT_MILLIAMP,
 )
 
 sy6970_ns = cg.esphome_ns.namespace("sy6970")
@@ -19,6 +21,7 @@ SY6970 = sy6970_ns.class_(
 )
 
 CONF_SYS_VOLTAGE = "sys_voltage"
+CONF_CHG_CURRENT = "chg_current"
 
 CONF_STATE_LED_ENABLE = "state_led_enable"
 CONF_CONV_RATE_ENABLE = "state_adc_enable"
@@ -46,9 +49,15 @@ CONFIG_SCHEMA = cv.Schema(
             device_class=DEVICE_CLASS_VOLTAGE,
             state_class=STATE_CLASS_MEASUREMENT,
             ),
+        cv.Optional(CONF_CHG_CURRENT ): sensor.sensor_schema(
+            unit_of_measurement=UNIT_MILLIAMP,
+            accuracy_decimals=2,
+            device_class=DEVICE_CLASS_CURRENT,
+            state_class=STATE_CLASS_MEASUREMENT,
+            ),
     }
 ).extend(
-    cv.polling_component_schema("6s")
+    cv.polling_component_schema("1s")
 ).extend(
     i2c.i2c_device_schema(0x6A)
 )
@@ -73,3 +82,6 @@ async def to_code(config):
     if CONF_SYS_VOLTAGE in config:
         sens = await sensor.new_sensor(config[CONF_SYS_VOLTAGE])
         cg.add(var.set_sys_voltage_sensor(sens))
+    if CONF_CHG_CURRENT in config:
+        sens = await sensor.new_sensor(config[CONF_CHG_CURRENT])
+        cg.add(var.set_chg_current_sensor(sens))

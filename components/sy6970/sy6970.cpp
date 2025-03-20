@@ -66,6 +66,15 @@ void SY6970::update() {
     bus_voltage_v += 2.6f;
     this->bus_voltage_sensor_->publish_state(bus_voltage_v);
   }
+  if (this->charge_current_sensor_ != nullptr) {
+    ConfigurationRegister12 charge_register;
+    err =this->read_register(POWERS_PPM_REG_12H, &charge_register.raw, 1);
+    ERROR_CHECK(err);
+
+    float charge_current = charge_register.chgi;
+    charge_current *= 0.05f;
+    this->charge_current_sensor_->publish_state(charge_current);
+  }
 }
 
 void SY6970::dump_config() {
