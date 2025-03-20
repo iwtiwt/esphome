@@ -100,7 +100,7 @@ class SY6970 : public PollingComponent, public i2c::I2CDevice {
   sensor::Sensor *battery_voltage_sensor_{nullptr};
   sensor::Sensor *bus_voltage_sensor_{nullptr};
   sensor::Sensor *sys_voltage_sensor_{nullptr};
-  sensor::Sensor *chg_current_sensor_{nullptr};
+  sensor::Sensor *charge_current_sensor_{nullptr};
   bool is_state_led_enabled_ = false;
   bool is_adc_rate_enabled_ = false;
 };
