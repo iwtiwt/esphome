@@ -88,7 +88,7 @@ class SY6970 : public PollingComponent, public i2c::I2CDevice {
   void set_batt_voltage_sensor(sensor::Sensor *battery_voltage_sensor) { battery_voltage_sensor_ = battery_voltage_sensor; }
   void set_bus_voltage_sensor(sensor::Sensor *bus_voltage_sensor) { bus_voltage_sensor_ = bus_voltage_sensor; }
   void set_sys_voltage_sensor(sensor::Sensor *sys_voltage_sensor) { sys_voltage_sensor_ = sys_voltage_sensor; }
-  void set_chg_current_sensor(sensor::Sensor *chg_current_sensor) { chg_current_sensor_ = chg_current_sensor; }
+  void set_chg_current_sensor(sensor::Sensor *chg_current_sensor) { charge_current_sensor_ = chg_current_sensor; }
   void disable_watchdog();
 
  protected:
