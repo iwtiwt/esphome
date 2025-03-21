@@ -72,7 +72,7 @@ void SY6970::update() {
     ERROR_CHECK(err);
 
     float charge_current = charge_register.chgi;
-    charge_current *= 50f;
+    charge_current *= 50.0f;
     this->charge_current_sensor_->publish_state(charge_current);
   }
 }
