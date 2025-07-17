@@ -7,7 +7,6 @@
 namespace esphome {
 namespace sy6970 {
 
-#define _BV(b) (1ULL << (uint64_t)(b))
 #define ERROR_CHECK(err) \
   if ((err) != i2c::ERROR_OK) { \
     this->status_set_warning("Failed to communicate"); \
