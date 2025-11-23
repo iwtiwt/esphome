@@ -8,6 +8,24 @@
 namespace esphome {
 namespace sy6970 {
 
+union ConfigurationRegister00 {
+  uint8_t raw;
+  struct {
+    uint8_t current_input_limit : 6;
+    uint8_t enable_ilim_pin : 1;
+    uint8_t enable_hiz : 1;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister01 {
+  uint8_t raw;
+  struct {
+    uint8_t input_voltage_limit_offset : 5;
+    uint8_t boost_cold_temp_thresh : 1;
+    uint8_t boost_hot_temp_thresh : 2;
+  } __attribute__((packed));
+};
+
 union ConfigurationRegister02 {
   uint8_t raw;
   struct {
@@ -19,6 +37,43 @@ union ConfigurationRegister02 {
     uint8_t boost_freq : 1;
     uint8_t conv_rate : 1;
     uint8_t conv_start : 1;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister03 {
+  uint8_t raw;
+  struct {
+    uint8_t reserved : 1;
+    uint8_t min_sys_voltage_limit : 3;
+    uint8_t enable_charge : 1;
+    uint8_t enable_boost : 1;
+    uint8_t watchdog_reset : 1;
+    uint8_t enable_battery_load : 1;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister04 {
+  uint8_t raw;
+  struct {
+    uint8_t fast_charge_current_limit : 7;
+    uint8_t enable_pumpx : 1;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister05 {
+  uint8_t raw;
+  struct {
+    uint8_t terminating_current_limit : 4;
+    uint8_t precharge_current_limit : 4;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister06 {
+  uint8_t raw;
+  struct {
+    uint8_t battery_recharge_thresh_offset : 1;
+    uint8_t battery_precharge_to_fastcharge_thresh : 1;
+    uint8_t battery_charge_voltage_limit : 6;
   } __attribute__((packed));
 };
 
