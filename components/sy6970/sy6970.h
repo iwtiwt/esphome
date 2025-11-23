@@ -89,6 +89,47 @@ union ConfigurationRegister07 {
   } __attribute__((packed));
 };
 
+union ConfigurationRegister08 {
+  uint8_t raw;
+  struct {
+    uint8_t thermal_regulation_thresh : 2; 
+    uint8_t input_voltage_clamp : 3;
+    uint8_t input_compensation_resistor : 3;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister09 {
+  uint8_t raw;
+  struct {
+    uint8_t xxx : 1;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister0A {
+  uint8_t raw;
+  struct {
+    uint8_t xxx : 1;
+  } __attribute__((packed));
+};
+union ConfigurationRegister0B {
+  uint8_t raw;
+  struct {
+    uint8_t xxx : 1;
+  } __attribute__((packed));
+};
+union ConfigurationRegister0C {
+  uint8_t raw;
+  struct {
+    uint8_t xxx : 1;
+  } __attribute__((packed));
+};
+union ConfigurationRegister0D {
+  uint8_t raw;
+  struct {
+    uint8_t xxx : 1;
+  } __attribute__((packed));
+};
+
 union ConfigurationRegister0E {
   uint8_t raw;
   struct {
@@ -101,6 +142,14 @@ union ConfigurationRegister0F {
   uint8_t raw;
   struct {
     uint8_t sysv : 7;
+    uint8_t unused : 1;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister10 {
+  uint8_t raw;
+  struct {
+    uint8_t ntc_pct_regn : 7;
     uint8_t unused : 1;
   } __attribute__((packed));
 };
@@ -118,6 +167,26 @@ union ConfigurationRegister12 {
   struct {
     uint8_t chgi : 7;
     uint8_t unused : 1;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister13 {
+  uint8_t raw;
+  struct {
+    uint8_t current_input_limit_setting : 6;
+    uint8_t current_input_in_dpm : 1;
+    uint8_t voltage_input_in_dpm : 1;
+  } __attribute__((packed));
+};
+
+union ConfigurationRegister14 {
+  uint8_t raw;
+  struct {
+    uint8_t chip_rev : 2;
+    uint8_t temperatire_profile : 1;
+    uint8_t device_configuration : 3;
+    uint8_t current_input_adaptive_status : 1;
+    uint8_t register_reset : 1;
   } __attribute__((packed));
 };
 
