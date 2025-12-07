@@ -6,8 +6,10 @@ namespace aw9364 {
 
 static const char *TAG = "aw9364";
 
-fan::FanTraits AW9364::get_traits() {
-  return fan::FanTraits(this->oscillating_ != nullptr, false, this->direction_ != nullptr, 0);
+light::LightTraits AW9364::get_traits() {
+  auto traits = light::LightTraits();
+  traits.set_supported_color_modes({light::ColorMode::BRIGHTNESS});
+  return traits;
 }
 
 void AW9364::control(const fan::FanCall &call) {
@@ -24,8 +26,6 @@ void AW9364::write_state_() {
   this->output_->set_state(this->state);
   if (this->oscillating_ != nullptr)
     this->oscillating_->set_state(this->oscillating);
-  if (this->direction_ != nullptr)
-    this->direction_->set_state(this->direction == fan::FanDirection::REVERSE);
 }
 
 void AW9364::dump_config() { LOG_FAN("", "E", this); }
