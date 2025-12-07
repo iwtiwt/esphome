@@ -28,6 +28,32 @@ void AW9364::write_state_() {
     this->oscillating_->set_state(this->oscillating);
 }
 
+void AW9364::setBrightness(uint8_t value)
+{
+    static uint8_t level = 0;
+    static uint8_t steps = 16;
+    if (value == 0) {
+        digitalWrite(BOARD_TFT_BL, 0);
+        delay(3);
+        level = 0;
+        return;
+    }
+    if (level == 0) {
+        digitalWrite(BOARD_TFT_BL, 1);
+        level = steps;
+        delayMicroseconds(30);
+    }
+    int from = steps - level;
+    int to = steps - value;
+    int num = (steps + to - from) % steps;
+    for (int i = 0; i < num; i++) {
+        digitalWrite(BOARD_TFT_BL, 0);
+        digitalWrite(BOARD_TFT_BL, 1);
+    }
+    level = value;
+}
+
+
 void AW9364::dump_config() { LOG_FAN("", "E", this); }
 
 }  // namespace aw9364
