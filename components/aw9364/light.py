@@ -4,7 +4,7 @@ from esphome.components import light, output
 from esphome.const import CONF_OUTPUT_ID, CONF_OUTPUT
 
 aw9364_ns = cg.esphome_ns.namespace("aw9364")
-AW9364 = empty_light_ns.class_("AW9364", light.LightOutput)
+AW9364 = aw9364_ns.class_("AW9364", light.LightOutput)
 
 CONFIG_SCHEMA = light.BRIGHTNESS_ONLY_LIGHT_SCHEMA.extend(
     {
