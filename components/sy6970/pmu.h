@@ -1,5 +1,6 @@
 #pragma once
 
+// HIZ MODE, ILIM REG
 #define POWERS_PPM_REG_00H                                   (0x00)
 #define POWERS_PPM_REG_01H                                   (0x01)
 #define POWERS_PPM_REG_02H                                   (0x02)
