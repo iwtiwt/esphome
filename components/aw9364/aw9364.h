@@ -11,11 +11,13 @@ class AW9364 : public light::LightOutput, public Component {
  public:
   light::LightTraits get_traits() override;
   void write_state(light::LightState *state) override;
+  void set_output(output::FloatOutput *output) { output_ = output; }
   void set_output_pin(GPIOPin *pin) { this->pin_ = pin; }
 
   protected:
   GPIOPin *pin_;
-  uint8_t current_brightness_; 
+  uint8_t current_brightness_;
+  output::FloatOutput *output_;
 
 };
 
