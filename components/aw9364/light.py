@@ -20,6 +20,4 @@ async def to_code(config):
     # Set up the GPIO pin
     pin = await cg.gpio_pin_expression(config[CONF_PIN])
     cg.add(var.set_pin(pin))
-    # Set up the light
-    await light.setup_light(var, config)
     await cg.register_component(var, config)
