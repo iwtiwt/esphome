@@ -9,7 +9,6 @@ namespace aw9364 {
 
 class AW9364 : public light::LightOutput, public Component {
  public:
-  AW9364(GPIOPin pin);
   light::LightTraits get_traits() override;
   void write_state(light::LightState *state) override;
   void set_output_pin(GPIOPin *pin) { this->pin_ = pin; }
