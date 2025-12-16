@@ -1,6 +1,6 @@
 #pragma once
 
-#include "esphome/components/output/binary_output.h"
+#include "esphome/components/light/light_output.h"
 #include "esphome/core/component.h"
 
 namespace esphome {
