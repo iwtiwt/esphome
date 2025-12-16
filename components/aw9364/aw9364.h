@@ -14,7 +14,7 @@ class AW9364 : public light::LightOutput, public Component {
   void set_output_pin(GPIOPin *pin) { this->pin_ = pin; }
 
   protected:
-  GPIOPin pin_;
+  GPIOPin *pin_;
   uint8_t current_brightness_; 
 
 };
