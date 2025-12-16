@@ -6,55 +6,37 @@ namespace aw9364 {
 
 static const char *TAG = "aw9364";
 
-light::LightTraits AW9364::get_traits() {
-  auto traits = light::LightTraits();
-  traits.set_supported_color_modes({light::ColorMode::BRIGHTNESS});
-  return traits;
-}
 
-void AW9364::control(const fan::FanCall &call) {
-  if (call.get_state().has_value())
-    this->state = *call.get_state();
-  if (call.get_oscillating().has_value())
-    this->oscillating = *call.get_oscillating();
-
-  this->write_state_();
-  this->publish_state();
-}
-
-void AW9364::write_state_() {
-  this->output_->set_state(this->state);
-  if (this->oscillating_ != nullptr)
-    this->oscillating_->set_state(this->oscillating);
+void AW9364::write_state(light::LightState *state) override {
+  float brightness = state->current_values.get_brightness();
+  uint8_t new_brightness = static_cast<uint8_t>(brightness * 16);
+  setBrightness(new_brightness);
 }
 
 void AW9364::setBrightness(uint8_t value)
 {
-    static uint8_t level = 0;
     static uint8_t steps = 16;
     if (value == 0) {
-        digitalWrite(BOARD_TFT_BL, 0);
+        pin_->digital_write(false);
         delay(3);
-        level = 0;
+        current_brightness_ = 0;
         return;
     }
-    if (level == 0) {
-        digitalWrite(BOARD_TFT_BL, 1);
+    if (current_brightness_ == 0) {
+        pin_->digital_write(true);
         level = steps;
         delayMicroseconds(30);
     }
-    int from = steps - level;
+    int from = steps - current_brightness_;
     int to = steps - value;
     int num = (steps + to - from) % steps;
     for (int i = 0; i < num; i++) {
-        digitalWrite(BOARD_TFT_BL, 0);
-        digitalWrite(BOARD_TFT_BL, 1);
+        pin_->digital_write(false);
+        pin_->digital_write(true);
     }
-    level = value;
+    current_brightness_ = value;
 }
 
-
-void AW9364::dump_config() { LOG_FAN("", "E", this); }
 
 }  // namespace aw9364
 }  // namespace esphome
