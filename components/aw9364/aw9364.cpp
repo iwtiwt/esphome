@@ -6,8 +6,13 @@ namespace aw9364 {
 
 static const char *TAG = "aw9364";
 
+light::LightTraits EmptyLightOutput::get_traits() {
+    auto traits = light::LightTraits();
+    traits.set_supported_color_modes({light::ColorMode::BRIGHTNESS});
+    return traits;
+}
 
-void AW9364::write_state(light::LightState *state) {
+void write_state(light::LightState *state) {
   static uint8_t steps = 16;
   float brightness = state->current_values.get_brightness();
   uint8_t new_brightness = static_cast<uint8_t>(brightness * 16);
