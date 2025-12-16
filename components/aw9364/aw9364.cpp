@@ -19,7 +19,7 @@ void AW9364::write_state(light::LightState *state) override {
   }
   if (current_brightness_ == 0) {
       pin_->digital_write(true);
-      level = steps;
+      new_brightness = steps;
       delayMicroseconds(30);
   }
   int from = steps - current_brightness_;
