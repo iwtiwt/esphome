@@ -6,7 +6,7 @@ namespace aw9364 {
 
 static const char *TAG = "aw9364";
 
-light::LightTraits EmptyLightOutput::get_traits() {
+light::LightTraits AW9364::get_traits() {
     auto traits = light::LightTraits();
     traits.set_supported_color_modes({light::ColorMode::BRIGHTNESS});
     return traits;
