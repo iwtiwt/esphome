@@ -2,6 +2,7 @@
 
 #include "esphome/components/light/light_output.h"
 #include "esphome/core/component.h"
+#include "esphome/core/gpio.h"
 
 namespace esphome {
 namespace aw9364 {
