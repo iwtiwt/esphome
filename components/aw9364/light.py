@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import light, output
-from esphome.const import CONF_OUTPUT_ID, CONF_OUTPUT
+from esphome.const import CONF_OUTPUT_ID, CONF_PIN
 
 aw9364_ns = cg.esphome_ns.namespace("aw9364")
 AW9364 = aw9364_ns.class_("AW9364", light.LightOutput)
